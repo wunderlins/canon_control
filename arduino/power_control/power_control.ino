@@ -20,11 +20,17 @@ unsigned long duration, lastgood = 0;
 int ppm_in, cam_state, cam_shutdown = 0;
 
 void setup() {
+	pinMode(PIN_CAM_PWR_BTN, OUTPUT);
+	digitalWrite(PIN_CAM_PWR_BTN, LOW);
+	delay(5000); // make sure the pin is low
+	
 	pinMode(PIN_PPM, INPUT);
 	pinMode(PIN_CAM_PWR_CHK, INPUT);
 	pinMode(PIN_CAM_PWR_BTN, OUTPUT);
-	digitalWrite(PIN_CAM_PWR_BTN, LOW);
-	delay(100); // make sure the pin is low
+	
+	// check what the status of the camera is
+	cam_state = (analogRead(PIN_CAM_PWR_CHK) > 100) ? 1 : 0;
+	
 }
 
 void loop() {
